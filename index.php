@@ -15,6 +15,7 @@ button{background:#2563eb;color:white;padding:10px 15px;border:0;border-radius:6
 pre{background:#111;color:#eee;padding:10px;border-radius:6px;overflow-x:auto}
 .strong{font-weight:bold;color:#dc2626}
 
+/* HOJA DE VIDA */
 .cv-container{
     display:none;
     margin-top:25px;
@@ -78,12 +79,12 @@ function toggleCV() {
         <div class="cv-section-title">Perfil</div>
         <p>
             Estudiante de Ingeniería de Sistemas con fuertes conocimientos en ciencias de la computación,
-            programación backend y bases de datos. Experiencia con sistemas embebidos, microcontroladores
-            e inteligencia artificial, combinando teoría con proyectos prácticos e investigación.
+            programación backend y manejo de bases de datos. Experiencia con sistemas embebidos,
+            microcontroladores e inteligencia artificial.
         </p>
         <p>
-            Enfoque en diseño de software eficiente, escalable y organizado. Interés en el desarrollo de
-            software aplicado al área de salud y a la aviónica.
+            Me caracterizo por aprender rápidamente, diseñar software escalable, organizado y eficiente.
+            Interés en sistemas aplicados a salud y aviónica.
         </p>
     </div>
 
@@ -93,7 +94,7 @@ function toggleCV() {
             <strong>ESP32 IA de Detección de Personas</strong><br>
             - C++, Ensamblador, TensorFlowLite, ESP32-CAM<br>
             - Interfaz web integrada<br>
-            - Visión artificial en sistema embebido<br>
+            - Procesamiento de visión artificial embebido<br>
         </div>
     </div>
 
@@ -101,7 +102,7 @@ function toggleCV() {
         <div class="cv-section-title">Educación</div>
         <ul>
             <li>Ingeniería de Sistemas – Universidad El Bosque (Actual)</li>
-            <li>Colegio La Presentación Girardot – Bachiller</li>
+            <li>Colegio La Presentación Girardot – Graduado</li>
         </ul>
     </div>
 
@@ -128,6 +129,7 @@ function toggleCV() {
         <div class="skill-box">SQL / PL-SQL</div>
         <div class="skill-box">Node.js</div>
         <div class="skill-box">Go</div>
+        <div class="skill-box">CSS</div>
     </div>
 
     <div class="cv-section">
@@ -138,8 +140,9 @@ function toggleCV() {
         <div class="skill-box">Flask</div>
         <div class="skill-box">FastAPI</div>
         <div class="skill-box">Git / GitHub</div>
-        <div class="skill-box">MySQL / PostgreSQL</div>
         <div class="skill-box">ASP.NET Core</div>
+        <div class="skill-box">MySQL / PostgreSQL</div>
+        <div class="skill-box">Entity Framework</div>
     </div>
 
     <div class="cv-section">
@@ -177,7 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     function contar_bits($maskInt){
         $maskInt &= 0xFFFFFFFF;
         $count = 0;
-        while ($maskInt){ $count += $maskInt & 1; $maskInt >>= 1; }
+        while ($maskInt){ $count += ($maskInt & 1); $maskInt >>= 1; }
         return $count;
     }
 
@@ -222,14 +225,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             else $usable = pow(2,$hostBits) - 2;
 
             $firstUsable = $hostBits>1? $networkInt+1 : null;
-            $lastUsable = $hostBits>1? $broadcastInt-1 : null;
+            $lastUsable  = $hostBits>1? $broadcastInt-1 : null;
+
+            $clase = clase_ip($ipStr);
+            $priv = es_privada($ipStr) ? "Privada" : "Pública";
 
             echo "<div class='result'>";
             echo "<h3>Resultados</h3>";
+
             echo "<p><strong>IP de red:</strong> ".to_str($networkInt)."</p>";
             echo "<p><strong>IP de broadcast:</strong> ".to_str($broadcastInt)."</p>";
             echo "<p><strong>Hosts útiles:</strong> $usable</p>";
-            echo "<p><strong>Rango de IPs útiles:</strong> ".($firstUsable? to_str($firstUsable)." - ".to_str($lastUsable) : "N/A")."</p>";
+            echo "<p><strong>Rango de IPs útiles:</strong> ".($firstUsable ? to_str($firstUsable)." - ".to_str($lastUsable) : "N/A")."</p>";
+
+            echo "<hr>";
+
+            echo "<p><strong>Clase de la IP:</strong> $clase</p>";
+            echo "<p><strong>Tipo:</strong> $priv</p>";
+
             echo "</div>";
         }
     }
