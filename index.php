@@ -65,12 +65,12 @@ function toggleCV() {
 
 <h1>Calculadora de IP (PHP)</h1>
 
-<!-- BOTÓN PARA MOSTRAR HOJA DE VIDA -->
+<!-- BOTÓN HOJA DE VIDA -->
 <button onclick="toggleCV()" style="background:#16a34a;margin-bottom:15px">
     Mostrar / Ocultar Hoja de Vida
 </button>
 
-<!-- SECCIÓN OCULTA DE HOJA DE VIDA -->
+<!-- HOJA DE VIDA -->
 <div id="cv" class="cv-container">
 
     <div class="cv-title">Hoja de Vida - Juan Sebastián Pineda Santafé</div>
@@ -78,13 +78,11 @@ function toggleCV() {
     <div class="cv-section">
         <div class="cv-section-title">Perfil</div>
         <p>
-            Estudiante de Ingeniería de Sistemas con fuertes conocimientos en ciencias de la computación,
-            programación backend y manejo de bases de datos. Experiencia con sistemas embebidos,
-            microcontroladores e inteligencia artificial.
+            Estudiante de Ingeniería de Sistemas con conocimientos en backend, bases de datos,
+            sistemas embebidos e inteligencia artificial.
         </p>
         <p>
-            Me caracterizo por aprender rápidamente, diseñar software escalable, organizado y eficiente.
-            Interés en sistemas aplicados a salud y aviónica.
+            Enfoque en software escalable, eficiente y organizado. Interés en avionica y sistemas médicos.
         </p>
     </div>
 
@@ -92,65 +90,34 @@ function toggleCV() {
         <div class="cv-section-title">Proyecto Destacado</div>
         <div class="skill-box">
             <strong>ESP32 IA de Detección de Personas</strong><br>
-            - C++, Ensamblador, TensorFlowLite, ESP32-CAM<br>
+            - TensorFlowLite, C++, ESP32-CAM<br>
             - Interfaz web integrada<br>
-            - Procesamiento de visión artificial embebido<br>
+            - Visión artificial en sistema embebido<br>
         </div>
     </div>
 
     <div class="cv-section">
         <div class="cv-section-title">Educación</div>
         <ul>
-            <li>Ingeniería de Sistemas – Universidad El Bosque (Actual)</li>
-            <li>Colegio La Presentación Girardot – Graduado</li>
-        </ul>
-    </div>
-
-    <div class="cv-section">
-        <div class="cv-section-title">Áreas de Enfoque</div>
-        <ul>
-            <li>Ingeniería de Software</li>
-            <li>Inteligencia Artificial</li>
-            <li>Microprocesadores</li>
-            <li>Complejidad Algorítmica</li>
-            <li>Bases de Datos</li>
-            <li>Sistemas Operativos</li>
+            <li>Ingeniería de Sistemas – Universidad El Bosque</li>
+            <li>Colegio La Presentación Girardot</li>
         </ul>
     </div>
 
     <div class="cv-section">
         <div class="cv-section-title">Lenguajes</div>
-        <div class="skill-box">Python</div>
-        <div class="skill-box">Java</div>
-        <div class="skill-box">TypeScript</div>
-        <div class="skill-box">JavaScript</div>
-        <div class="skill-box">C / C++</div>
-        <div class="skill-box">C#</div>
-        <div class="skill-box">SQL / PL-SQL</div>
-        <div class="skill-box">Node.js</div>
+        <div class="skill-box">Python</div><div class="skill-box">Java</div>
+        <div class="skill-box">TypeScript</div><div class="skill-box">JavaScript</div>
+        <div class="skill-box">C / C++</div><div class="skill-box">C#</div>
+        <div class="skill-box">SQL / PL-SQL</div><div class="skill-box">Node.js</div>
         <div class="skill-box">Go</div>
-        <div class="skill-box">CSS</div>
     </div>
 
     <div class="cv-section">
-        <div class="cv-section-title">Frameworks y Herramientas</div>
-        <div class="skill-box">Angular</div>
-        <div class="skill-box">React</div>
-        <div class="skill-box">Spring Boot</div>
-        <div class="skill-box">Flask</div>
-        <div class="skill-box">FastAPI</div>
-        <div class="skill-box">Git / GitHub</div>
-        <div class="skill-box">ASP.NET Core</div>
-        <div class="skill-box">MySQL / PostgreSQL</div>
-        <div class="skill-box">Entity Framework</div>
-    </div>
-
-    <div class="cv-section">
-        <div class="cv-section-title">Idiomas</div>
-        <ul>
-            <li>Inglés: C1</li>
-            <li>Español: Nativo</li>
-        </ul>
+        <div class="cv-section-title">Frameworks</div>
+        <div class="skill-box">Angular</div><div class="skill-box">React</div>
+        <div class="skill-box">Spring Boot</div><div class="skill-box">Flask</div>
+        <div class="skill-box">FastAPI</div><div class="skill-box">Git / GitHub</div>
     </div>
 
 </div>
@@ -173,24 +140,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $ipStr = $_POST["ip"];
     $maskStr = $_POST["mask"];
 
-    function validar_ip($ip) { return filter_var($ip, FILTER_VALIDATE_IP); }
-    function to_int($ip) { $parts = explode('.', $ip); return ($parts[0] << 24) | ($parts[1] << 16) | ($parts[2] << 8) | $parts[3]; }
-    function to_str($int) { return (($int >> 24) & 255).".".(($int >> 16) & 255).".".(($int >> 8) & 255).".".($int & 255); }
+    function validar_ip($ip){ return filter_var($ip, FILTER_VALIDATE_IP); }
+    function to_int($ip){ $p = explode('.', $ip); return ($p[0]<<24)|($p[1]<<16)|($p[2]<<8)|$p[3]; }
+    function to_str($int){ return (($int>>24)&255).".".(($int>>16)&255).".".(($int>>8)&255).".".($int&255); }
 
-    function contar_bits($maskInt){
-        $maskInt &= 0xFFFFFFFF;
-        $count = 0;
-        while ($maskInt){ $count += ($maskInt & 1); $maskInt >>= 1; }
-        return $count;
+    function contar_bits($mask){
+        $mask &= 0xFFFFFFFF;
+        $c = 0;
+        while($mask){ $c += $mask & 1; $mask >>= 1; }
+        return $c;
     }
 
     function clase_ip($ip){
-        $oct1 = intval(explode('.', $ip)[0]);
-        if ($oct1 >= 1 && $oct1 <= 126) return "A";
-        if ($oct1 == 127) return "Loopback";
-        if ($oct1 >= 128 && $oct1 <= 191) return "B";
-        if ($oct1 >= 192 && $oct1 <= 223) return "C";
-        if ($oct1 >= 224 && $oct1 <= 239) return "D (Multicast)";
+        $o = intval(explode('.', $ip)[0]);
+        if($o>=1 && $o<=126) return "A";
+        if($o==127) return "Loopback";
+        if($o>=128 && $o<=191) return "B";
+        if($o>=192 && $o<=223) return "C";
+        if($o>=224 && $o<=239) return "D (Multicast)";
         return "E (Experimental)";
     }
 
@@ -202,46 +169,71 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
     }
 
-    if (!validar_ip($ipStr) || !validar_ip($maskStr)){
+    if(!validar_ip($ipStr) || !validar_ip($maskStr)){
         echo "<p class='strong'>❌ IP o máscara no válidas.</p>";
     } else {
 
-        $ipInt = to_int($ipStr);
-        $maskInt = to_int($maskStr);
+        $ip = to_int($ipStr);
+        $mask = to_int($maskStr);
 
-        $maskBin = str_pad(decbin($maskInt),32,"0",STR_PAD_LEFT);
-        if (!preg_match('/^1*0*$/',$maskBin)){
-            echo "<p class='strong'>❌ Máscara no válida (bits no contiguos).</p>";
+        $maskBin = str_pad(decbin($mask),32,"0",STR_PAD_LEFT);
+        if(!preg_match('/^1*0*$/',$maskBin)){
+            echo "<p class='strong'>❌ Máscara no válida.</p>";
         } else {
 
-            $ones = contar_bits($maskInt);
+            $ones = contar_bits($mask);
             $hostBits = 32 - $ones;
 
-            $networkInt = $ipInt & $maskInt;
-            $broadcastInt = $networkInt | (~$maskInt & 0xFFFFFFFF);
+            $net = $ip & $mask;
+            $bcast = $net | (~$mask & 0xFFFFFFFF);
 
-            if ($hostBits == 0) $usable = 1;
-            elseif ($hostBits == 1) $usable = 0;
-            else $usable = pow(2,$hostBits) - 2;
+            if($hostBits == 0) $usable = 1;
+            elseif($hostBits == 1) $usable = 0;
+            else $usable = pow(2,$hostBits)-2;
 
-            $firstUsable = $hostBits>1? $networkInt+1 : null;
-            $lastUsable  = $hostBits>1? $broadcastInt-1 : null;
+            $first = $hostBits>1 ? $net+1 : null;
+            $last  = $hostBits>1 ? $bcast-1 : null;
 
             $clase = clase_ip($ipStr);
-            $priv = es_privada($ipStr) ? "Privada" : "Pública";
+            $priv  = es_privada($ipStr) ? "Privada" : "Pública";
+
+            $ipBin = str_pad(decbin($ip),32,"0",STR_PAD_LEFT);
+
+            $netPart = substr($ipBin,0,$ones);
+            $hostPart = substr($ipBin,$ones);
 
             echo "<div class='result'>";
             echo "<h3>Resultados</h3>";
 
-            echo "<p><strong>IP de red:</strong> ".to_str($networkInt)."</p>";
-            echo "<p><strong>IP de broadcast:</strong> ".to_str($broadcastInt)."</p>";
+            echo "<p><strong>IP de red:</strong> ".to_str($net)."</p>";
+            echo "<p><strong>IP de broadcast:</strong> ".to_str($bcast)."</p>";
             echo "<p><strong>Hosts útiles:</strong> $usable</p>";
-            echo "<p><strong>Rango de IPs útiles:</strong> ".($firstUsable ? to_str($firstUsable)." - ".to_str($lastUsable) : "N/A")."</p>";
+            echo "<p><strong>Rango de IPs útiles:</strong> ".($first? to_str($first)." - ".to_str($last) : "N/A")."</p>";
 
             echo "<hr>";
 
             echo "<p><strong>Clase de la IP:</strong> $clase</p>";
             echo "<p><strong>Tipo:</strong> $priv</p>";
+
+            echo "<hr>";
+
+            echo "<h3>Fragmento de Red / Trama</h3>";
+            echo "<p><strong>Binario (N = Network, H = Host):</strong></p>";
+
+            echo "<pre>";
+            for($i=0;$i<32;$i++){
+                echo $ipBin[$i];
+                echo (($i+1)%8==0) ? " " : "";
+            }
+            echo "\n\nMarcado:\n";
+
+            for($i=0;$i<32;$i++){
+                echo ($i<$ones?"N":"H");
+                echo (($i+1)%8==0)?" ":"";
+            }
+
+            echo "\n\nNetwork Bits: $ones\nHost Bits: $hostBits\n";
+            echo "</pre>";
 
             echo "</div>";
         }
